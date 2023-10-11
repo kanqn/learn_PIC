@@ -164,7 +164,25 @@ STATUS_BU EQU 0Ch ;バックアップ用変数宣言
 
 ```
 
-#### 
+また、MOVFだと退避前と復帰後でSTATUSレジスタの値が異なってしまうため、**SWAPF命令を使用する**  
 
+#### SWAPF命令
+
+SWAPF STATUS , W
+上位4ビットと下位4ビットを入れ替えて格納する  
+上下のビットが入れ替わるが、復帰時に元に戻るため、復帰後のSTATUSレジスタは退避前と同じ値になる  
+
+以下がSWAPFを使用したレジスタ退避,復帰のサンプル(MOVFをSWAPFに変えただけ)  
+
+```
+STATUS_BU EQU 0Ch
+        SWAPF STATUS,W
+        MOVWF STATUS_BU
+
+        ;割り込み処理を記述
+
+        SWAPF STATUS_BU,W
+        MOVWF STATUS
+```
 
 
