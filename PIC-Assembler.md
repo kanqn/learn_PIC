@@ -257,4 +257,24 @@ GET_DATA:
     MOVLW 42H  ; Wレジスタに戻り値をセット
     RETURN     ; Wレジスタに42Hが入った状態で戻る
 ```
+  
+#### 送信中ビジーを使用して他の処理を受け付けない
 
+ある関数内でTXBUSYのビットを1にする↓
+
+```
+~~~~
+#DEFINE     TXBUSY      RESULT,0
+RESULT      EQU     0CH     ;送受信ステータス
+~~~~
+BSF TXBUSY    ; 実際は BSF RESULT,0 と同じ
+```
+
+こうしておくことで、例えばTXを使用する別の関数内でTXが使用中かどうかを判断できる↓  
+
+```
+WAITLP:
+    BTFSC TXBUSY     ; まだ送信中？
+    GOTO  WAITLP     ; YES→待機継続
+    ; 送信完了！次の処理へ
+```
