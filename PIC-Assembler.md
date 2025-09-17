@@ -216,3 +216,21 @@ STATUS_BU EQU 0Ch
 
 GIEビットを1に戻すことで、全体の割込みを許可する  
 **RETFIE**: GIEビットを1にして、元のルーチンへ戻る。  
+
+
+
+
+### PICでのRETURNの戻り値を使う方法
+
+PICアセンブラでは、戻り値を返したい場合、通常はWレジスタや特定のメモリ位置を使う  
+  
+例:  
+```
+CALL GET_DATA
+MOVWF RESULT   ; Wレジスタの値をRESULTに保存
+
+GET_DATA:
+    ; 何らかの処理
+    MOVLW 42H  ; Wレジスタに戻り値をセット
+    RETURN     ; Wレジスタに42Hが入った状態で戻る
+```
