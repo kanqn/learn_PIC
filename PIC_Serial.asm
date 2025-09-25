@@ -3,6 +3,7 @@
 ;  Connect This PIC Test Module to Personal computer.
 ;  If receive data from PC then display that data to LCD.
 ;  If Switch is ON then send one data to PC.
+;  http://www.picfun.com/serial21.html
 ;************************************************************** 
         LIST        P=PIC16F84A
         INCLUDE     "P16F84A.INC"
